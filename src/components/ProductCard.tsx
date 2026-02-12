@@ -89,6 +89,7 @@ function CardInner({ product, onBuy }: ProductCardProps) {
           {onBuy ? (
             <button
               onClick={(e) => {
+                e.preventDefault();
                 e.stopPropagation();
                 onBuy(product);
               }}
@@ -108,23 +109,12 @@ function CardInner({ product, onBuy }: ProductCardProps) {
 }
 
 export default function ProductCard({ product, onBuy }: ProductCardProps) {
-  if (onBuy) {
-    return (
-      <div
-        onClick={() => onBuy(product)}
-        className="group block bg-drip-card-bg rounded-xl border border-drip-border hover:border-drip-border-light transition-all duration-200 overflow-hidden hover:shadow-lg hover:shadow-drip-accent/5 cursor-pointer"
-      >
-        <CardInner product={product} onBuy={onBuy} />
-      </div>
-    );
-  }
-
   return (
     <Link
       href={`/box-break/${product.id}`}
       className="group block bg-drip-card-bg rounded-xl border border-drip-border hover:border-drip-border-light transition-all duration-200 overflow-hidden hover:shadow-lg hover:shadow-drip-accent/5"
     >
-      <CardInner product={product} />
+      <CardInner product={product} onBuy={onBuy} />
     </Link>
   );
 }

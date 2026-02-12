@@ -497,7 +497,7 @@ export default function InstantPacksPage() {
             <div className="flex flex-col items-center animate-[fadeInUp_0.6s_ease-out]">
               {/* Rarity burst effect */}
               <div
-                className={`absolute inset-0 opacity-20 bg-gradient-radial from-current to-transparent ${rarityConfig[pulledCard.rarity].color}`}
+                className={`absolute inset-0 opacity-20 bg-gradient-radial from-current to-transparent pointer-events-none ${rarityConfig[pulledCard.rarity].color}`}
               />
 
               {/* Rarity label */}
