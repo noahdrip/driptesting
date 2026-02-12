@@ -7,8 +7,6 @@ import {
   ArrowLeft,
   ShieldCheck,
   Star,
-  Clock,
-  Users,
   Zap,
   ShoppingCart,
   ChevronRight,
@@ -31,7 +29,6 @@ export default function BoxBreakPage() {
   const [activeImage, setActiveImage] = useState(0);
 
   const detail = boxBreakDetail;
-  const progress = (detail.slotsFilled / detail.totalSlots) * 100;
 
   const toggleSlot = (slotId: string) => {
     setSelectedSlots((prev) =>
@@ -178,47 +175,17 @@ export default function BoxBreakPage() {
             </button>
           </div>
 
-          {/* Price & Progress */}
+          {/* Price */}
           <div className="bg-drip-surface rounded-xl border border-drip-border p-4 mb-4">
-            <div className="flex items-end justify-between mb-3">
-              <div>
-                <p className="text-sm text-drip-text-muted mb-0.5">
-                  Price per slot
-                </p>
-                <p className="text-3xl font-bold text-drip-text">
-                  ${detail.price}
-                  <span className="text-base font-normal text-drip-text-muted ml-1">
-                    USD
-                  </span>
-                </p>
-              </div>
-              <div className="text-right">
-                <div className="flex items-center gap-1.5 text-sm">
-                  <Users className="w-4 h-4 text-drip-text-muted" />
-                  <span className="text-drip-text font-medium">
-                    {detail.slotsFilled}
-                  </span>
-                  <span className="text-drip-text-muted">
-                    / {detail.totalSlots} filled
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Progress Bar */}
-            <div className="h-2 bg-drip-bg rounded-full overflow-hidden mb-2">
-              <div
-                className="h-full bg-gradient-to-r from-drip-accent to-drip-green rounded-full transition-all"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-            <div className="flex justify-between text-xs text-drip-text-muted">
-              <span>{Math.round(progress)}% filled</span>
-              <span className="flex items-center gap-1">
-                <Clock className="w-3 h-3" />
-                Scheduled: Feb 15, 2026 at 8:00 PM
+            <p className="text-sm text-drip-text-muted mb-0.5">
+              Price per slot
+            </p>
+            <p className="text-3xl font-bold text-drip-text">
+              ${detail.price}
+              <span className="text-base font-normal text-drip-text-muted ml-1">
+                USD
               </span>
-            </div>
+            </p>
           </div>
 
           {/* Guarantees */}
