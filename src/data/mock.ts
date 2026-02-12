@@ -372,6 +372,190 @@ export const vaultItems: VaultItem[] = [
   },
 ];
 
+// Purchase history (instant packs + stream purchases)
+export interface Purchase {
+  id: string;
+  packTitle: string;
+  packImage: string;
+  category: string;
+  seller: string;
+  price: number;
+  quantity: number;
+  purchasedAt: string;
+  source: "instant-pack" | "stream";
+  cardPulled?: string;
+}
+
+export const purchases: Purchase[] = [
+  {
+    id: "p1",
+    packTitle: "25th Anniversary Pack",
+    packImage: CARD_COLORS[0],
+    category: "Pokemon",
+    seller: "DripOfficial",
+    price: 23,
+    quantity: 1,
+    purchasedAt: "2026-02-10T14:28:00Z",
+    source: "instant-pack",
+    cardPulled: "Charizard Base Set Holo",
+  },
+  {
+    id: "p2",
+    packTitle: "25th Anniversary Pack",
+    packImage: CARD_COLORS[0],
+    category: "Pokemon",
+    seller: "DripOfficial",
+    price: 23,
+    quantity: 1,
+    purchasedAt: "2026-02-09T17:55:00Z",
+    source: "instant-pack",
+    cardPulled: "Celebrations Mew",
+  },
+  {
+    id: "p3",
+    packTitle: "NBA Prizm Mystery Pack",
+    packImage: CARD_COLORS[3],
+    category: "Sports",
+    seller: "HoopsBreaks",
+    price: 30,
+    quantity: 2,
+    purchasedAt: "2026-02-08T10:45:00Z",
+    source: "stream",
+    cardPulled: "Luka Doncic Prizm Silver",
+  },
+  {
+    id: "p4",
+    packTitle: "Vintage Holo Pack",
+    packImage: CARD_COLORS[2],
+    category: "Pokemon",
+    seller: "RetroCards",
+    price: 35,
+    quantity: 1,
+    purchasedAt: "2026-02-07T09:10:00Z",
+    source: "instant-pack",
+    cardPulled: "Vintage Holo Blastoise",
+  },
+  {
+    id: "p5",
+    packTitle: "One Piece Ultra Rare Pack",
+    packImage: CARD_COLORS[4],
+    category: "One Piece",
+    seller: "AnimeTCG",
+    price: 50,
+    quantity: 1,
+    purchasedAt: "2026-02-05T16:40:00Z",
+    source: "stream",
+    cardPulled: "One Piece Luffy Manga Rare",
+  },
+  {
+    id: "p6",
+    packTitle: "Topps Chrome Baseball Pack",
+    packImage: CARD_COLORS[5],
+    category: "Sports",
+    seller: "DiamondBreaks",
+    price: 28,
+    quantity: 3,
+    purchasedAt: "2026-02-04T19:50:00Z",
+    source: "instant-pack",
+    cardPulled: "Topps Chrome Yordan Alvarez RC",
+  },
+  {
+    id: "p7",
+    packTitle: "PSA 10 Hunt Pack",
+    packImage: CARD_COLORS[1],
+    category: "Pokemon",
+    seller: "SlabKings",
+    price: 45,
+    quantity: 1,
+    purchasedAt: "2026-02-03T13:20:00Z",
+    source: "instant-pack",
+  },
+  {
+    id: "p8",
+    packTitle: "Football Rookie Chase Pack",
+    packImage: CARD_COLORS[8],
+    category: "Sports",
+    seller: "GridironCards",
+    price: 38,
+    quantity: 2,
+    purchasedAt: "2026-02-01T21:30:00Z",
+    source: "stream",
+  },
+];
+
+// Redemption tracking history
+export interface Redemption {
+  id: string;
+  items: { title: string; grade: string; grader: string; image: string }[];
+  status: "processing" | "shipped" | "in-transit" | "delivered";
+  requestedAt: string;
+  shippedAt?: string;
+  deliveredAt?: string;
+  trackingNumber?: string;
+  carrier?: string;
+  shippingCost: number;
+  taxCost: number;
+  address: string;
+}
+
+export const redemptions: Redemption[] = [
+  {
+    id: "r1",
+    items: [
+      { title: "One Piece Luffy Manga Rare", grade: "PSA 10", grader: "PSA", image: CARD_COLORS_VAULT[4] },
+    ],
+    status: "delivered",
+    requestedAt: "2026-01-20T10:00:00Z",
+    shippedAt: "2026-01-21T15:30:00Z",
+    deliveredAt: "2026-01-25T11:00:00Z",
+    trackingNumber: "1Z999AA10123456784",
+    carrier: "UPS",
+    shippingCost: 4.57,
+    taxCost: 0.32,
+    address: "Los Angeles, CA 90001",
+  },
+  {
+    id: "r2",
+    items: [
+      { title: "Luka Doncic Prizm Silver", grade: "BGS 9.5", grader: "BGS", image: CARD_COLORS_VAULT[3] },
+    ],
+    status: "in-transit",
+    requestedAt: "2026-02-08T14:00:00Z",
+    shippedAt: "2026-02-09T09:00:00Z",
+    trackingNumber: "9400111899223100001",
+    carrier: "USPS",
+    shippingCost: 4.57,
+    taxCost: 0.32,
+    address: "Los Angeles, CA 90001",
+  },
+  {
+    id: "r3",
+    items: [
+      { title: "Evolving Skies Rayquaza", grade: "BGS 9", grader: "BGS", image: CARD_COLORS_VAULT[2] },
+      { title: "Eevee Heroes Espeon", grade: "PSA 9", grader: "PSA", image: CARD_COLORS_VAULT[1] },
+    ],
+    status: "shipped",
+    requestedAt: "2026-02-10T16:00:00Z",
+    shippedAt: "2026-02-11T10:30:00Z",
+    trackingNumber: "7489203847561",
+    carrier: "FedEx",
+    shippingCost: 9.14,
+    taxCost: 0.64,
+    address: "Los Angeles, CA 90001",
+  },
+  {
+    id: "r4",
+    items: [
+      { title: "Vivid Voltage Pikachu V", grade: "PSA 8", grader: "PSA", image: CARD_COLORS_VAULT[0] },
+    ],
+    status: "processing",
+    requestedAt: "2026-02-12T08:00:00Z",
+    shippingCost: 4.57,
+    taxCost: 0.32,
+    address: "Los Angeles, CA 90001",
+  },
+];
+
 // Possible pull results when opening a pack (keyed by category)
 export interface PullResult {
   title: string;

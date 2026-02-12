@@ -61,7 +61,7 @@ const myStuffItems: NavItem[] = [
   {
     label: "Purchases",
     icon: ShoppingBag,
-    href: "#",
+    href: "/purchases",
     color: "text-drip-text-secondary",
   },
   {
@@ -73,7 +73,7 @@ const myStuffItems: NavItem[] = [
   {
     label: "Redemptions",
     icon: RotateCcw,
-    href: "#",
+    href: "/redemptions",
     color: "text-drip-text-secondary",
   },
 ];
