@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-drip-bg: #0b0b0f;
+  --color-drip-surface: #141419;
+  --color-drip-surface-hover: #1c1c24;
+  --color-drip-border: #2a2a35;
+  --color-drip-border-light: #3a3a48;
+  --color-drip-text: #f0f0f5;
+  --color-drip-text-secondary: #9898a8;
+  --color-drip-text-muted: #6a6a7a;
+  --color-drip-accent: #6c5ce7;
+  --color-drip-accent-hover: #7c6cf7;
+  --color-drip-green: #00d26a;
+  --color-drip-red: #ff4757;
+  --color-drip-yellow: #ffc048;
+  --color-drip-blue: #4facfe;
+  --color-drip-purple: #6c5ce7;
+  --color-drip-pink: #fd79a8;
+  --color-drip-card-bg: #16161e;
+  --color-drip-card-hover: #1e1e28;
+  --color-drip-sidebar: #101015;
+}
+
+body {
+  background: var(--color-drip-bg);
+  color: var(--color-drip-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-drip-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-drip-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-drip-border-light);
+}
+
+/* Progress bar animation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
