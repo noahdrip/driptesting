@@ -12,10 +12,6 @@ const badgeColors: Record<string, string> = {
 };
 
 export default function ProductCard({ product }: { product: Product }) {
-  const pullPercentage = product.totalPulls
-    ? ((product.pullsRemaining ?? 0) / product.totalPulls) * 100
-    : 0;
-
   return (
     <Link
       href={`/box-break/${product.id}`}
@@ -45,23 +41,6 @@ export default function ProductCard({ product }: { product: Product }) {
           </span>
         )}
 
-        {/* Pulls remaining bar */}
-        {product.totalPulls && (
-          <div className="absolute bottom-0 left-0 right-0 bg-black/60 backdrop-blur-sm px-3 py-2">
-            <div className="flex justify-between items-center text-[10px] text-white/80 mb-1">
-              <span>
-                {product.pullsRemaining} / {product.totalPulls} pulls left
-              </span>
-              <span>{Math.round(pullPercentage)}%</span>
-            </div>
-            <div className="h-1 bg-white/20 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-drip-green rounded-full transition-all"
-                style={{ width: `${pullPercentage}%` }}
-              />
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Content */}
