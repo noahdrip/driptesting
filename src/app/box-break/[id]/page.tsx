@@ -181,11 +181,35 @@ export default function BoxBreakPage() {
             <p className="text-sm text-drip-text-muted mb-0.5">
               Price per slot
             </p>
-            <p className="text-3xl font-bold text-drip-text">
+            <p className="text-3xl font-bold text-drip-text mb-3">
               ${detail.price}
               <span className="text-base font-normal text-drip-text-muted ml-1">
                 USD
               </span>
+            </p>
+            <button
+              onClick={() => {
+                clearCart();
+                const pack = instantPacks.find((p) => p.id === detail.id) ?? {
+                  id: detail.id,
+                  title: detail.title,
+                  price: detail.price,
+                  image: detail.images[0],
+                  seller: detail.seller,
+                  category: detail.category,
+                  tags: detail.tags,
+                  type: "instant-pack" as const,
+                };
+                addItem(pack, 1);
+                router.push("/checkout");
+              }}
+              className="flex items-center justify-center gap-2 w-full bg-drip-accent hover:bg-drip-accent-hover text-white font-semibold py-3 rounded-xl transition-colors"
+            >
+              <Zap className="w-4 h-4" />
+              Buy Now — ${detail.price}
+            </button>
+            <p className="text-[10px] text-drip-text-muted text-center mt-2">
+              Or select multiple slots below
             </p>
           </div>
 
