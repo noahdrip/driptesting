@@ -44,7 +44,7 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="p-4 md:p-6 max-w-4xl">
+      <div className="p-4 md:p-6 max-w-4xl mx-auto">
         <div className="flex flex-col items-center justify-center py-24 text-center">
           <h1 className="text-2xl font-bold text-drip-text mb-2">
             Nothing to check out
@@ -81,7 +81,7 @@ export default function CheckoutPage() {
     "w-full bg-drip-bg border border-drip-border rounded-xl px-4 py-2.5 text-sm text-drip-text placeholder-drip-text-muted outline-none focus:border-drip-accent transition-colors";
 
   return (
-    <div className="p-4 md:p-6 max-w-4xl">
+    <div className="p-4 md:p-6 max-w-4xl mx-auto">
       {/* Back */}
       <button
         onClick={() => {

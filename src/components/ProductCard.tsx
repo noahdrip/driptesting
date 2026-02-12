@@ -11,12 +11,14 @@ const badgeColors: Record<string, string> = {
   LIMITED: "bg-drip-yellow/90 text-black",
 };
 
-export default function ProductCard({ product }: { product: Product }) {
+interface ProductCardProps {
+  product: Product;
+  onBuy?: (product: Product) => void;
+}
+
+function CardInner({ product, onBuy }: ProductCardProps) {
   return (
-    <Link
-      href={`/box-break/${product.id}`}
-      className="group block bg-drip-card-bg rounded-xl border border-drip-border hover:border-drip-border-light transition-all duration-200 overflow-hidden hover:shadow-lg hover:shadow-drip-accent/5"
-    >
+    <>
       {/* Image Area */}
       <div className="relative aspect-[4/3] overflow-hidden">
         <div
@@ -40,7 +42,6 @@ export default function ProductCard({ product }: { product: Product }) {
             {product.badge}
           </span>
         )}
-
       </div>
 
       {/* Content */}
@@ -75,7 +76,7 @@ export default function ProductCard({ product }: { product: Product }) {
           ))}
         </div>
 
-        {/* Price */}
+        {/* Price + Buy */}
         <div className="flex items-center gap-2">
           <span className="text-lg font-bold text-drip-text">
             ${product.price}
@@ -85,11 +86,45 @@ export default function ProductCard({ product }: { product: Product }) {
               ${product.originalPrice}
             </span>
           )}
-          <span className="text-[10px] text-drip-text-muted ml-auto">
-            per pull
-          </span>
+          {onBuy ? (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onBuy(product);
+              }}
+              className="ml-auto bg-drip-accent hover:bg-drip-accent-hover text-white text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors"
+            >
+              Buy
+            </button>
+          ) : (
+            <span className="text-[10px] text-drip-text-muted ml-auto">
+              per pull
+            </span>
+          )}
         </div>
       </div>
+    </>
+  );
+}
+
+export default function ProductCard({ product, onBuy }: ProductCardProps) {
+  if (onBuy) {
+    return (
+      <div
+        onClick={() => onBuy(product)}
+        className="group block bg-drip-card-bg rounded-xl border border-drip-border hover:border-drip-border-light transition-all duration-200 overflow-hidden hover:shadow-lg hover:shadow-drip-accent/5 cursor-pointer"
+      >
+        <CardInner product={product} onBuy={onBuy} />
+      </div>
+    );
+  }
+
+  return (
+    <Link
+      href={`/box-break/${product.id}`}
+      className="group block bg-drip-card-bg rounded-xl border border-drip-border hover:border-drip-border-light transition-all duration-200 overflow-hidden hover:shadow-lg hover:shadow-drip-accent/5"
+    >
+      <CardInner product={product} />
     </Link>
   );
 }

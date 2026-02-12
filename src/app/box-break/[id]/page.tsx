@@ -10,8 +10,6 @@ import {
   Zap,
   ChevronRight,
   Check,
-  Lock,
-  Gift,
   Info,
   Share2,
   Heart,
@@ -20,36 +18,24 @@ import { boxBreakDetail, instantPacks } from "@/data/mock";
 import { useCart } from "@/context/CartContext";
 import ProductCard from "@/components/ProductCard";
 
-type Tab = "slots" | "details" | "items" | "seller";
+type Tab = "details" | "items" | "seller";
 
 export default function BoxBreakPage() {
   const router = useRouter();
-  const [selectedSlots, setSelectedSlots] = useState<string[]>([]);
-  const [activeTab, setActiveTab] = useState<Tab>("slots");
+  const [activeTab, setActiveTab] = useState<Tab>("details");
   const [activeImage, setActiveImage] = useState(0);
 
   const { clearCart, addItem } = useCart();
   const detail = boxBreakDetail;
 
-  const toggleSlot = (slotId: string) => {
-    setSelectedSlots((prev) =>
-      prev.includes(slotId)
-        ? prev.filter((id) => id !== slotId)
-        : [...prev, slotId]
-    );
-  };
-
-  const totalPrice = selectedSlots.length * detail.price;
-
   const tabs: { key: Tab; label: string }[] = [
-    { key: "slots", label: "Slots" },
     { key: "details", label: "Details" },
     { key: "items", label: "Possible Items" },
     { key: "seller", label: "Seller" },
   ];
 
   return (
-    <div className="p-4 md:p-6 max-w-6xl">
+    <div className="p-4 md:p-6 max-w-6xl mx-auto">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-drip-text-muted mb-4">
         <button
@@ -179,7 +165,7 @@ export default function BoxBreakPage() {
           {/* Price */}
           <div className="bg-drip-surface rounded-xl border border-drip-border p-4 mb-4">
             <p className="text-sm text-drip-text-muted mb-0.5">
-              Price per slot
+              Price per pull
             </p>
             <p className="text-3xl font-bold text-drip-text mb-3">
               ${detail.price}
@@ -208,9 +194,6 @@ export default function BoxBreakPage() {
               <Zap className="w-4 h-4" />
               Buy Now — ${detail.price}
             </button>
-            <p className="text-[10px] text-drip-text-muted text-center mt-2">
-              Or select multiple slots below
-            </p>
           </div>
 
           {/* Guarantees */}
@@ -250,50 +233,6 @@ export default function BoxBreakPage() {
 
           {/* Tab Content */}
           <div className="min-h-[200px]">
-            {activeTab === "slots" && (
-              <div>
-                <p className="text-sm text-drip-text-muted mb-3">
-                  Select available slots to purchase. Each slot gives you one
-                  random pull.
-                </p>
-                <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
-                  {detail.slots.map((slot) => {
-                    const isSelected = selectedSlots.includes(slot.id);
-                    const isSold = slot.status === "sold";
-
-                    return (
-                      <button
-                        key={slot.id}
-                        onClick={() => !isSold && toggleSlot(slot.id)}
-                        disabled={isSold}
-                        className={`relative rounded-xl p-3 text-center transition-all border ${
-                          isSold
-                            ? "bg-drip-bg border-drip-border opacity-50 cursor-not-allowed"
-                            : isSelected
-                            ? "bg-drip-accent/10 border-drip-accent text-drip-accent"
-                            : "bg-drip-surface border-drip-border hover:border-drip-border-light hover:bg-drip-surface-hover cursor-pointer"
-                        }`}
-                      >
-                        {isSold && (
-                          <Lock className="w-3.5 h-3.5 mx-auto mb-1 text-drip-text-muted" />
-                        )}
-                        {!isSold && isSelected && (
-                          <Check className="w-3.5 h-3.5 mx-auto mb-1 text-drip-accent" />
-                        )}
-                        {!isSold && !isSelected && (
-                          <Gift className="w-3.5 h-3.5 mx-auto mb-1 text-drip-text-muted" />
-                        )}
-                        <p className="text-xs font-medium">{slot.label}</p>
-                        <p className="text-[10px] text-drip-text-muted">
-                          {isSold ? "Sold" : `$${slot.price}`}
-                        </p>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
             {activeTab === "details" && (
               <div className="text-sm text-drip-text-secondary whitespace-pre-line leading-relaxed">
                 {detail.longDescription}
@@ -378,55 +317,6 @@ export default function BoxBreakPage() {
           </div>
         </div>
       </div>
-
-      {/* Sticky Purchase Bar */}
-      {selectedSlots.length > 0 && (
-        <div className="fixed bottom-0 left-0 right-0 z-40 bg-drip-surface/95 backdrop-blur-md border-t border-drip-border p-4">
-          <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
-            <div>
-              <p className="text-sm text-drip-text-muted">
-                {selectedSlots.length} slot
-                {selectedSlots.length !== 1 ? "s" : ""} selected
-              </p>
-              <p className="text-xl font-bold text-drip-text">
-                ${totalPrice}
-                <span className="text-sm font-normal text-drip-text-muted ml-1">
-                  total
-                </span>
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => setSelectedSlots([])}
-                className="px-4 py-2.5 text-sm font-medium text-drip-text-secondary hover:text-drip-text border border-drip-border rounded-xl hover:bg-drip-surface-hover transition-colors"
-              >
-                Clear
-              </button>
-              <button
-                onClick={() => {
-                  clearCart();
-                  const pack = instantPacks.find((p) => p.id === detail.id) ?? {
-                    id: detail.id,
-                    title: detail.title,
-                    price: detail.price,
-                    image: detail.images[0],
-                    seller: detail.seller,
-                    category: detail.category,
-                    tags: detail.tags,
-                    type: "instant-pack" as const,
-                  };
-                  addItem(pack, selectedSlots.length);
-                  router.push("/checkout");
-                }}
-                className="flex items-center gap-2 bg-drip-accent hover:bg-drip-accent-hover text-white font-semibold px-6 py-2.5 rounded-xl transition-colors"
-              >
-                <Zap className="w-4 h-4" />
-                Buy Now — ${totalPrice}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Related Packs */}
       <div className="mt-12 mb-8">

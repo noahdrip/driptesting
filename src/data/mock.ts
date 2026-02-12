@@ -372,6 +372,86 @@ export const vaultItems: VaultItem[] = [
   },
 ];
 
+// Possible pull results when opening a pack (keyed by category)
+export interface PullResult {
+  title: string;
+  grade: string;
+  grader: string;
+  estimatedValue: number;
+  rarity: "common" | "uncommon" | "rare" | "ultra-rare" | "chase";
+  image: string;
+}
+
+const rarityWeights: PullResult["rarity"][] = [
+  "common", "common", "common",
+  "uncommon", "uncommon",
+  "rare", "rare",
+  "ultra-rare",
+  "chase",
+];
+
+export const pullResultsByCategory: Record<string, PullResult[]> = {
+  Pokemon: [
+    { title: "Pikachu VMAX Rainbow", grade: "PSA 10", grader: "PSA", estimatedValue: 180, rarity: "ultra-rare", image: CARD_COLORS[0] },
+    { title: "Charizard Base Set Holo", grade: "PSA 8", grader: "PSA", estimatedValue: 420, rarity: "chase", image: CARD_COLORS[0] },
+    { title: "Umbreon VMAX Alt Art", grade: "BGS 9.5", grader: "BGS", estimatedValue: 310, rarity: "chase", image: CARD_COLORS[1] },
+    { title: "Celebrations Mew", grade: "PSA 10", grader: "PSA", estimatedValue: 85, rarity: "rare", image: CARD_COLORS[1] },
+    { title: "Blastoise Base Set Holo", grade: "CGC 9", grader: "CGC", estimatedValue: 195, rarity: "ultra-rare", image: CARD_COLORS[2] },
+    { title: "Eevee Heroes Espeon", grade: "PSA 9", grader: "PSA", estimatedValue: 65, rarity: "uncommon", image: CARD_COLORS[6] },
+    { title: "Vivid Voltage Pikachu V", grade: "PSA 8", grader: "PSA", estimatedValue: 30, rarity: "common", image: CARD_COLORS[8] },
+    { title: "Evolving Skies Rayquaza", grade: "BGS 9", grader: "BGS", estimatedValue: 120, rarity: "rare", image: CARD_COLORS[2] },
+  ],
+  Sports: [
+    { title: "Luka Doncic Prizm Silver", grade: "BGS 9.5", grader: "BGS", estimatedValue: 310, rarity: "chase", image: CARD_COLORS[3] },
+    { title: "Ja Morant Mosaic Prizm", grade: "PSA 10", grader: "PSA", estimatedValue: 190, rarity: "ultra-rare", image: CARD_COLORS[3] },
+    { title: "Wemby Topps Chrome RC", grade: "PSA 10", grader: "PSA", estimatedValue: 450, rarity: "chase", image: CARD_COLORS[5] },
+    { title: "Shohei Ohtani Chrome", grade: "PSA 9", grader: "PSA", estimatedValue: 85, rarity: "rare", image: CARD_COLORS[5] },
+    { title: "Tyrese Maxey Prizm RC", grade: "BGS 9", grader: "BGS", estimatedValue: 55, rarity: "uncommon", image: CARD_COLORS[8] },
+    { title: "Yordan Alvarez Topps RC", grade: "PSA 9", grader: "PSA", estimatedValue: 75, rarity: "rare", image: CARD_COLORS[5] },
+    { title: "Anthony Edwards Hoops RC", grade: "PSA 8", grader: "PSA", estimatedValue: 35, rarity: "common", image: CARD_COLORS[3] },
+  ],
+  Magic: [
+    { title: "Black Lotus (Unlimited)", grade: "BGS 7", grader: "BGS", estimatedValue: 8500, rarity: "chase", image: CARD_COLORS[7] },
+    { title: "Force of Will (Alliances)", grade: "PSA 9", grader: "PSA", estimatedValue: 320, rarity: "ultra-rare", image: CARD_COLORS[7] },
+    { title: "Ragavan Nimble Pilferer", grade: "PSA 10", grader: "PSA", estimatedValue: 95, rarity: "rare", image: CARD_COLORS[7] },
+    { title: "Mox Opal (MM2)", grade: "BGS 9.5", grader: "BGS", estimatedValue: 60, rarity: "uncommon", image: CARD_COLORS[7] },
+  ],
+  "Yu-Gi-Oh!": [
+    { title: "Blue-Eyes White Dragon LOB", grade: "PSA 9", grader: "PSA", estimatedValue: 520, rarity: "chase", image: CARD_COLORS[9] },
+    { title: "Dark Magician SDY", grade: "PSA 8", grader: "PSA", estimatedValue: 130, rarity: "rare", image: CARD_COLORS[9] },
+    { title: "Starlight Rare Ash Blossom", grade: "PSA 10", grader: "PSA", estimatedValue: 280, rarity: "ultra-rare", image: CARD_COLORS[9] },
+    { title: "Ghost Rare Ra", grade: "BGS 9", grader: "BGS", estimatedValue: 65, rarity: "uncommon", image: CARD_COLORS[9] },
+  ],
+  "One Piece": [
+    { title: "Luffy Manga Rare OP01", grade: "PSA 10", grader: "PSA", estimatedValue: 390, rarity: "chase", image: CARD_COLORS[4] },
+    { title: "Shanks Manga Rare OP01", grade: "PSA 10", grader: "PSA", estimatedValue: 220, rarity: "ultra-rare", image: CARD_COLORS[4] },
+    { title: "Nami Alt Art OP03", grade: "PSA 9", grader: "PSA", estimatedValue: 75, rarity: "rare", image: CARD_COLORS[4] },
+    { title: "Zoro Leader OP01", grade: "BGS 9.5", grader: "BGS", estimatedValue: 40, rarity: "uncommon", image: CARD_COLORS[4] },
+  ],
+  "Dragon Ball Z": [
+    { title: "SSJ4 Gogeta SCR", grade: "PSA 10", grader: "PSA", estimatedValue: 350, rarity: "chase", image: CARD_COLORS[6] },
+    { title: "Goku Black SPR", grade: "BGS 9.5", grader: "BGS", estimatedValue: 120, rarity: "ultra-rare", image: CARD_COLORS[6] },
+    { title: "Vegeta Super Rare", grade: "PSA 9", grader: "PSA", estimatedValue: 55, rarity: "rare", image: CARD_COLORS[6] },
+    { title: "Broly Promo", grade: "PSA 8", grader: "PSA", estimatedValue: 25, rarity: "common", image: CARD_COLORS[6] },
+  ],
+};
+
+export function getRandomPull(category: string): PullResult {
+  const pool = pullResultsByCategory[category] ?? pullResultsByCategory["Pokemon"]!;
+  const rarity = rarityWeights[Math.floor(Math.random() * rarityWeights.length)];
+  const matching = pool.filter((p) => p.rarity === rarity);
+  const results = matching.length > 0 ? matching : pool;
+  return results[Math.floor(Math.random() * results.length)]!;
+}
+
+export const rarityConfig: Record<PullResult["rarity"], { label: string; color: string; glow: string; bg: string }> = {
+  common: { label: "Common", color: "text-gray-400", glow: "shadow-gray-400/30", bg: "from-gray-500 to-gray-600" },
+  uncommon: { label: "Uncommon", color: "text-green-400", glow: "shadow-green-400/40", bg: "from-green-500 to-emerald-600" },
+  rare: { label: "Rare", color: "text-blue-400", glow: "shadow-blue-400/50", bg: "from-blue-500 to-indigo-600" },
+  "ultra-rare": { label: "Ultra Rare", color: "text-purple-400", glow: "shadow-purple-500/60", bg: "from-purple-500 to-pink-600" },
+  chase: { label: "CHASE HIT", color: "text-yellow-400", glow: "shadow-yellow-400/70", bg: "from-yellow-400 to-orange-500" },
+};
+
 export const categories = [
   "All",
   "Pokemon",

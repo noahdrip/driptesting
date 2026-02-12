@@ -21,7 +21,7 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <div className="p-4 md:p-6 max-w-4xl">
+      <div className="p-4 md:p-6 max-w-4xl mx-auto">
         <div className="flex flex-col items-center justify-center py-24 text-center">
           <div className="w-20 h-20 bg-drip-surface rounded-2xl flex items-center justify-center mb-4 border border-drip-border">
             <ShoppingCart className="w-10 h-10 text-drip-text-muted" />
@@ -44,7 +44,7 @@ export default function CartPage() {
   }
 
   return (
-    <div className="p-4 md:p-6 max-w-4xl">
+    <div className="p-4 md:p-6 max-w-4xl mx-auto">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
         <button
