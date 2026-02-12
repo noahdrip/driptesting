@@ -1,19 +1,28 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import {
   Search,
-  ShoppingCart,
   Bell,
   User,
   Menu,
   X,
   Droplets,
   Coins,
+  Package,
 } from "lucide-react";
 
+const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "Instant Packs", href: "/instant-packs" },
+  { label: "Live Streams", href: "#" },
+  { label: "Marketplace", href: "#" },
+];
+
 export default function Header() {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
 
@@ -32,30 +41,24 @@ export default function Header() {
 
         {/* Navigation Links */}
         <nav className="hidden lg:flex items-center gap-1 ml-4">
-          <Link
-            href="/"
-            className="px-3 py-2 text-sm text-drip-text-secondary hover:text-drip-text rounded-lg hover:bg-drip-surface-hover transition-colors"
-          >
-            Home
-          </Link>
-          <Link
-            href="/instant-packs"
-            className="px-3 py-2 text-sm text-drip-text font-medium rounded-lg bg-drip-surface-hover transition-colors"
-          >
-            Instant Packs
-          </Link>
-          <Link
-            href="#"
-            className="px-3 py-2 text-sm text-drip-text-secondary hover:text-drip-text rounded-lg hover:bg-drip-surface-hover transition-colors"
-          >
-            Live Streams
-          </Link>
-          <Link
-            href="#"
-            className="px-3 py-2 text-sm text-drip-text-secondary hover:text-drip-text rounded-lg hover:bg-drip-surface-hover transition-colors"
-          >
-            Marketplace
-          </Link>
+          {navLinks.map((link) => {
+            const isActive =
+              pathname === link.href ||
+              (link.href !== "/" && pathname.startsWith(link.href));
+            return (
+              <Link
+                key={link.label}
+                href={link.href}
+                className={`px-3 py-2 text-sm rounded-lg transition-colors ${
+                  isActive
+                    ? "text-drip-text font-medium bg-drip-surface-hover"
+                    : "text-drip-text-secondary hover:text-drip-text hover:bg-drip-surface-hover"
+                }`}
+              >
+                {link.label}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Search Bar */}
@@ -78,6 +81,19 @@ export default function Header() {
 
         {/* Right Section */}
         <div className="flex items-center gap-2 ml-auto">
+          {/* My Vault - Prominent CTA */}
+          <Link
+            href="/vault"
+            className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              pathname === "/vault"
+                ? "bg-drip-accent/10 text-drip-accent"
+                : "text-drip-text-secondary hover:text-drip-text hover:bg-drip-surface-hover"
+            }`}
+          >
+            <Package className="w-4 h-4" />
+            My Vault
+          </Link>
+
           {/* Driplets Balance */}
           <div className="hidden sm:flex items-center gap-1.5 bg-drip-bg rounded-full px-3 py-1.5 border border-drip-border">
             <Coins className="w-4 h-4 text-drip-yellow" />
@@ -88,14 +104,6 @@ export default function Header() {
           <button className="relative p-2 text-drip-text-secondary hover:text-drip-text hover:bg-drip-surface-hover rounded-lg transition-colors">
             <Bell className="w-5 h-5" />
             <span className="absolute top-1 right-1 w-2 h-2 bg-drip-red rounded-full" />
-          </button>
-
-          {/* Cart */}
-          <button className="relative p-2 text-drip-text-secondary hover:text-drip-text hover:bg-drip-surface-hover rounded-lg transition-colors">
-            <ShoppingCart className="w-5 h-5" />
-            <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-drip-accent rounded-full text-[10px] font-bold flex items-center justify-center text-white">
-              2
-            </span>
           </button>
 
           {/* User Avatar */}
@@ -132,29 +140,25 @@ export default function Header() {
                 className="w-full bg-transparent text-sm text-drip-text placeholder-drip-text-muted py-2.5 px-3 outline-none"
               />
             </div>
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className={`block px-3 py-2.5 text-sm rounded-lg transition-colors ${
+                  pathname === link.href
+                    ? "text-drip-text font-medium bg-drip-surface-hover"
+                    : "text-drip-text-secondary hover:text-drip-text hover:bg-drip-surface-hover"
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
             <Link
-              href="/"
-              className="block px-3 py-2.5 text-sm text-drip-text-secondary hover:text-drip-text rounded-lg hover:bg-drip-surface-hover"
+              href="/vault"
+              className="flex items-center gap-2 px-3 py-2.5 text-sm text-drip-accent font-medium rounded-lg hover:bg-drip-surface-hover"
             >
-              Home
-            </Link>
-            <Link
-              href="/instant-packs"
-              className="block px-3 py-2.5 text-sm text-drip-text font-medium rounded-lg bg-drip-surface-hover"
-            >
-              Instant Packs
-            </Link>
-            <Link
-              href="#"
-              className="block px-3 py-2.5 text-sm text-drip-text-secondary hover:text-drip-text rounded-lg hover:bg-drip-surface-hover"
-            >
-              Live Streams
-            </Link>
-            <Link
-              href="#"
-              className="block px-3 py-2.5 text-sm text-drip-text-secondary hover:text-drip-text rounded-lg hover:bg-drip-surface-hover"
-            >
-              Marketplace
+              <Package className="w-4 h-4" />
+              My Vault
             </Link>
           </div>
         </div>

@@ -275,6 +275,103 @@ Every single pull guarantees a professionally graded card (PSA, BGS, or CGC). Yo
   ],
 };
 
+export interface VaultItem {
+  id: string;
+  title: string;
+  image: string;
+  category: string;
+  grade: string;
+  grader: string;
+  estimatedValue: number;
+  packTitle: string;
+  pulledAt: string;
+  status: "vaulted" | "redeemed" | "shipping";
+}
+
+const CARD_COLORS_VAULT = [
+  "from-yellow-500 to-orange-600",
+  "from-blue-500 to-purple-600",
+  "from-green-500 to-teal-600",
+  "from-red-500 to-pink-600",
+  "from-indigo-500 to-blue-600",
+  "from-purple-500 to-pink-600",
+];
+
+export const vaultItems: VaultItem[] = [
+  {
+    id: "v1",
+    title: "Charizard Base Set Holo",
+    image: CARD_COLORS_VAULT[0],
+    category: "Pokemon",
+    grade: "PSA 8",
+    grader: "PSA",
+    estimatedValue: 420,
+    packTitle: "25th Anniversary Pack",
+    pulledAt: "2026-02-10T14:30:00Z",
+    status: "vaulted",
+  },
+  {
+    id: "v2",
+    title: "Celebrations Mew",
+    image: CARD_COLORS_VAULT[1],
+    category: "Pokemon",
+    grade: "PSA 10",
+    grader: "PSA",
+    estimatedValue: 85,
+    packTitle: "25th Anniversary Pack",
+    pulledAt: "2026-02-09T18:00:00Z",
+    status: "vaulted",
+  },
+  {
+    id: "v3",
+    title: "Luka Doncic Prizm Silver",
+    image: CARD_COLORS_VAULT[3],
+    category: "Sports",
+    grade: "BGS 9.5",
+    grader: "BGS",
+    estimatedValue: 310,
+    packTitle: "NBA Prizm Mystery Pack",
+    pulledAt: "2026-02-08T11:00:00Z",
+    status: "shipping",
+  },
+  {
+    id: "v4",
+    title: "Vintage Holo Blastoise",
+    image: CARD_COLORS_VAULT[2],
+    category: "Pokemon",
+    grade: "CGC 9",
+    grader: "CGC",
+    estimatedValue: 195,
+    packTitle: "Vintage Holo Pack",
+    pulledAt: "2026-02-07T09:15:00Z",
+    status: "vaulted",
+  },
+  {
+    id: "v5",
+    title: "One Piece Luffy Manga Rare",
+    image: CARD_COLORS_VAULT[4],
+    category: "One Piece",
+    grade: "PSA 10",
+    grader: "PSA",
+    estimatedValue: 150,
+    packTitle: "One Piece Ultra Rare Pack",
+    pulledAt: "2026-02-05T16:45:00Z",
+    status: "redeemed",
+  },
+  {
+    id: "v6",
+    title: "Topps Chrome Yordan Alvarez RC",
+    image: CARD_COLORS_VAULT[5],
+    category: "Sports",
+    grade: "PSA 9",
+    grader: "PSA",
+    estimatedValue: 75,
+    packTitle: "Topps Chrome Baseball Pack",
+    pulledAt: "2026-02-04T20:00:00Z",
+    status: "vaulted",
+  },
+];
+
 export const categories = [
   "All",
   "Pokemon",

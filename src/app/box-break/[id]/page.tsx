@@ -8,7 +8,6 @@ import {
   ShieldCheck,
   Star,
   Zap,
-  ShoppingCart,
   ChevronRight,
   Check,
   Lock,
@@ -18,6 +17,7 @@ import {
   Heart,
 } from "lucide-react";
 import { boxBreakDetail, instantPacks } from "@/data/mock";
+import { useCart } from "@/context/CartContext";
 import ProductCard from "@/components/ProductCard";
 
 type Tab = "slots" | "details" | "items" | "seller";
@@ -28,6 +28,7 @@ export default function BoxBreakPage() {
   const [activeTab, setActiveTab] = useState<Tab>("slots");
   const [activeImage, setActiveImage] = useState(0);
 
+  const { clearCart, addItem } = useCart();
   const detail = boxBreakDetail;
 
   const toggleSlot = (slotId: string) => {
@@ -377,9 +378,26 @@ export default function BoxBreakPage() {
               >
                 Clear
               </button>
-              <button className="flex items-center gap-2 bg-drip-accent hover:bg-drip-accent-hover text-white font-semibold px-6 py-2.5 rounded-xl transition-colors">
-                <ShoppingCart className="w-4 h-4" />
-                Add to Cart
+              <button
+                onClick={() => {
+                  clearCart();
+                  const pack = instantPacks.find((p) => p.id === detail.id) ?? {
+                    id: detail.id,
+                    title: detail.title,
+                    price: detail.price,
+                    image: detail.images[0],
+                    seller: detail.seller,
+                    category: detail.category,
+                    tags: detail.tags,
+                    type: "instant-pack" as const,
+                  };
+                  addItem(pack, selectedSlots.length);
+                  router.push("/checkout");
+                }}
+                className="flex items-center gap-2 bg-drip-accent hover:bg-drip-accent-hover text-white font-semibold px-6 py-2.5 rounded-xl transition-colors"
+              >
+                <Zap className="w-4 h-4" />
+                Buy Now — ${totalPrice}
               </button>
             </div>
           </div>
